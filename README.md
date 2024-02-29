@@ -78,4 +78,4 @@ For questions and support, contact [insert contact method] or join our [insert d
 
 ## License
 
-This project is licensed under the MIT License - see the LICENSE file for details.
+This project is licensed under the [MIT License](LICENCE) - see the LICENSE file for details.
