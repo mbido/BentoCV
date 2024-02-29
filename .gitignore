@@ -1,0 +1,4 @@
+.DS_Store
+exemple*
+!exemple.pdf
+!exemple.tex

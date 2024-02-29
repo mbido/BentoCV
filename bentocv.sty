@@ -1,0 +1,205 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{bentocv}[2024/02/28 BentoCV]
+
+% Required packages
+\RequirePackage[scaled]{helvet}
+\RequirePackage[T1]{fontenc}
+\RequirePackage{calc}
+\RequirePackage{array}
+\RequirePackage{lipsum}
+\RequirePackage{paracol}
+\RequirePackage{fontawesome5}
+\RequirePackage{hyperref}
+\RequirePackage{geometry}
+\RequirePackage[most]{tcolorbox}
+\RequirePackage{tikz}
+
+% Removing the pages number
+\pagestyle{empty}
+
+% Set the default font to sans-serif
+\renewcommand*\familydefault{\sfdefault}
+
+% Set the colors
+\definecolor{bentopurple}{HTML}{A455AB}
+\definecolor{bentoblue}{HTML}{3A5AA6}
+
+% Set the hyperref colors all to black
+\hypersetup{
+    colorlinks=true,
+    linkcolor=black,
+    filecolor=black,      
+    urlcolor=black,
+}
+
+% Set the geometry
+\geometry{
+ left=15mm,
+ right=15mm,
+ top=15mm,
+ bottom=15mm
+}
+
+% Set the section style
+\tcbuselibrary{skins} 
+\newtcolorbox{bentosection}[2][]{
+    enhanced,
+    before upper={\bfseries\large #2\par\medskip\normalfont\normalsize\raggedright}, % Applique le titre en gras, plus grand, puis réinitialise la police pour le contenu
+    fonttitle=\bfseries,
+    left=4mm,
+    right=4mm,
+    top=2mm,
+    bottom=2mm,
+    colback=white,
+    colframe=white,
+    boxrule=0pt,
+    arc=4mm,
+    drop fuzzy shadow southeast={black!50}, 
+    fuzzy shadow={-0.3mm}{0.3mm}{10mm}{10mm}{black!15},
+    title=, % Le titre est géré manuellement, donc on le laisse vide ici
+    #1
+}
+
+% Set the colorboxs
+\newtcbox{\custombox}[1]{
+  nobeforeafter,
+  tcbox raise base,
+  enhanced,
+  colframe=#1, % La couleur du cadre est un paramètre
+  colback=#1!15, % La couleur de fond est basée sur le cadre mais plus claire
+  boxrule=0.5mm,
+  arc=2mm,
+  top=2mm, bottom=2mm, left=2mm, right=2mm,
+  before upper={\rule[-3pt]{0pt}{10pt}},
+  boxsep=0pt,
+  fontupper=\sffamily
+}
+
+\newtcbox{\customboxnoborder}[1]{
+  nobeforeafter,
+  tcbox raise base,
+  enhanced,
+  colframe=#1!15, % La couleur du cadre est un paramètre
+  colback=#1!15, % La couleur de fond est basée sur le cadre mais plus claire
+  boxrule=0.5mm,
+  arc=2mm,
+  top=1mm, bottom=1mm, left=2mm, right=2mm,
+  before upper={\rule[-3pt]{0pt}{10pt}},
+  boxsep=0pt,
+  fontupper=\sffamily
+}
+
+% Set the commands
+\newcommand{\skillbox}[1]{%
+  \custombox{bentopurple}{#1}%
+  \hspace{-0.8mm}%
+}
+
+\newcommand{\activitybox}[1]{%
+  \custombox{bentoblue}{#1}%
+  \hspace{-0.8mm}%
+}
+
+\newcommand{\bentoleftcolumn}[1]{
+    \noindent
+    \begin{minipage}[t]{0.33\textwidth} % Colonne gauche avec alignement au top
+        \vspace{0pt}
+        #1
+    \end{minipage}
+}
+
+\newcommand{\bentorightcolumn}[1]{
+    \begin{minipage}[t]{0.65\textwidth} % Colonne droite avec alignement au top
+        \vspace{0pt}
+        #1
+    \end{minipage}
+}
+
+\newcommand{\assoc}[3]{
+    \textbf{#2} \hfill \customboxnoborder{#1}{#3}
+}
+
+\newcommand{\bentoexperience}[6]{
+    % #1 position
+    % #2 field
+    % #3 company
+    % #4 location
+    % #5 date
+    % #6 description
+    \assoc{bentopurple}{#1}{#2} \\ 
+    \textbf{\textcolor{gray}{\faBriefcase\hspace{1mm}#3\hspace{3mm}\faMapMarked\hspace{1mm}#4 \hfill #5}} \\
+    \ifx\relax#6\relax
+    \else
+        \vspace{1mm}
+        $\ast$ #6 \\
+    \fi
+    \textcolor{lightgray}{\rule{\linewidth}{0.4mm}} \\
+    \vspace{2mm}
+}
+
+\newcommand{\bentoeducation}[5]{
+    % #1 education / degree
+    % #2 institution
+    % #3 location
+    % #4 date
+    % #5 description
+    \assoc{bentoblue}{#1}{#4} \\
+    \textbf{\textcolor{gray}{\faUniversity\hspace{1mm}#2\hspace{3mm}\faMapMarked\hspace{1mm}#3}} \\
+    \ifx\relax#5\relax
+    \else
+        \vspace{1mm}
+        $\ast$ #5 \\
+    \fi
+    \textcolor{lightgray}{\rule{\linewidth}{0.4mm}} \\
+    \vspace{2mm}
+}
+
+\newcommand{\mygithub}[2]{%
+    \textbf{\href{#2}{{\faGithub\hspace{1mm}#1}}}
+}
+
+\newcommand{\mymail}[1]{%
+    \textbf{\href{mailto:#1}{{\faEnvelope\hspace{1mm}#1}}}
+}
+
+\newcommand{\myphone}[1]{%
+    \textbf{\href{tel:#1}{{\faPhone\hspace{1mm}#1}}}
+}
+
+\newcommand{\myadress}[1]{%
+    \textbf{{\faMapMarked\hspace{1mm}#1}}
+}
+
+\newcommand{\myvehiculelicence}[1]{%
+    \textbf{{\faCar\hspace{1mm}#1}}
+}
+
+\newcommand{\myjob}[1]{
+    \bfseries{\textcolor{gray}{#1}}
+}
+
+\newcommand{\bentotitle}[1]{
+    \begin{bentosection}{}
+        \begin{center}
+            \textbf{\Huge #1}
+        \end{center}
+    \end{bentosection}
+}
+
+
+\usetikzlibrary{calc}
+\newcommand*{\bord}{1mm}
+\newcommand{\bentopicture}[1]{
+    % \begin{tikzpicture}
+    %     \node[draw, thick, rounded corners=4mm, inner sep=0pt, minimum size=50mm] {
+    %         \includegraphics[width=\textwidth]{#1}
+    %     };
+    % \end{tikzpicture}
+    \begin{tikzpicture}
+        \def\ig{%
+         \includegraphics[width=\textwidth,keepaspectratio]{#1}}
+       \node [inner sep=0pt](mypicture) at (0,0) {\phantom{\ig}};
+       \clip[rounded corners=4mm] ($(mypicture.south west)+(\bord,\bord)$) rectangle ($(mypicture.north east)-(\bord,\bord)$);
+       \node[inner sep=0pt](mypicture) at (0,0) {\ig};
+      \end{tikzpicture}   
+}
