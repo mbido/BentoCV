@@ -1,4 +1,5 @@
 .DS_Store
-exemple*
-!exemple.pdf
-!exemple.tex
+example.*
+!example.pdf
+!example.tex
+!example.png
